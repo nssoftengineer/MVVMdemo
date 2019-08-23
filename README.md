@@ -1,14 +1,14 @@
-Data Binding
+<b>Data Binding</b>
 Declaratively bind observable data to UI elements
 
-Lifecycles
+<b>Lifecycles</b>
 Manage your activity and fragment lifecycles
 
-LiveData
+<b>LiveData</b>
 Notify views when underlying database changes
 
-Room
+<b>Room</b>
 Fluent SQLite database access
 
-ViewModel
+<b>ViewModel</b>
 Manage UI-related data in a lifecycle-conscious way
