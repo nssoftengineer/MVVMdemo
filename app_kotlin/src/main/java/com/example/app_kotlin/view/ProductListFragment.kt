@@ -14,6 +14,7 @@ import com.example.app_kotlin.R
 import com.example.app_kotlin.databinding.ListFragmentBinding
 
 import com.example.app_kotlin.db.entity.ProductEntity
+import com.example.app_kotlin.model.Product
 import com.example.app_kotlin.view.adapter.ProductAdapter
 import com.example.app_kotlin.viewmodel.ProductListViewModel
 
@@ -69,9 +70,11 @@ class ProductListFragment : Fragment() {
         })
     }
 
-    private val mProductClickCallback = ProductClickCallback { product ->
-        if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
-            (getActivity() as MainActivity).show(product)
+    private val mProductClickCallback = object : ProductClickCallback {
+        override fun onClick(product: Product) {
+            if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+                (getActivity() as MainActivity).show(product)
+            }
         }
     }
 }

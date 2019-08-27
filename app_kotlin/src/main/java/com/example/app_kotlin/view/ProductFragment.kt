@@ -12,6 +12,7 @@ import com.example.app_kotlin.R
 import com.example.app_kotlin.databinding.ProductFragmentBinding
 import com.example.app_kotlin.db.entity.CommentEntity
 import com.example.app_kotlin.db.entity.ProductEntity
+import com.example.app_kotlin.model.Comment
 import com.example.app_kotlin.view.adapter.CommentAdapter
 import com.example.app_kotlin.viewmodel.ProductViewModel
 
@@ -45,8 +46,10 @@ class ProductFragment : Fragment() {
         return mBinding!!.getRoot()
     }
 
-    private val mCommentClickCallback = CommentClickCallback {
-        // no-op
+    private val mCommentClickCallback = object : CommentClickCallback {
+        override fun onClick(comment: Comment) {
+            // no-op
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
