@@ -13,7 +13,7 @@
 
         <variable
             name="productViewModel"
-            type="com.example.mvvmdemo.viewmodel.ProductViewModel"/>
+            type="com.example.app_kotlin.viewmodel.ProductViewModel"/>
     </data>
 
     <LinearLayout
@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/loading_comments_tv"
                 android:text="@string/loading_comments"
-                app:visibleGone="@{isLoading}"/>
+               />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layoutManager="LinearLayoutManager"
-                    app:visibleGone="@{!isLoading}"/>
+                 />
             </FrameLayout>
         </FrameLayout>
 
