@@ -22,18 +22,36 @@ import com.example.app_kotlin.utils.AppExecutors
 @Database(entities = [ProductEntity::class, ProductFtsEntity::class, CommentEntity::class], version = 2)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
+
+    private val mIsDatabaseCreated = MutableLiveData<Boolean>()
+
     abstract fun productDao(): ProductDao
+
     abstract fun commentDao(): CommentDao
 
+    /**
+     * Check whether the database already exists and expose it via [.getDatabaseCreated]
+     */
+    private fun updateDatabaseCreated(context: Context) {
+        if (context.getDatabasePath(DATABASE_NAME).exists()) {
+            setDatabaseCreated()
+        }
+    }
+
+    private fun setDatabaseCreated() {
+        mIsDatabaseCreated.postValue(true)
+    }
+    fun getDatabaseCreated(): LiveData<Boolean> {
+        return mIsDatabaseCreated
+    }
+
     companion object {
+
+        private var sInstance: AppDatabase? = null
+
         @VisibleForTesting
-        val DATABASE_NAME = "basic-sample-kot-db"
+        val DATABASE_NAME = "basic-sample-db"
 
-
-        private val mIsDatabaseCreated = MutableLiveData<Boolean>()
-
-
-        lateinit var sInstance: AppDatabase
         fun getInstance(context: Context, executors: AppExecutors): AppDatabase {
             if (sInstance == null) {
                 synchronized(AppDatabase::class.java) {
@@ -43,17 +61,16 @@ abstract class AppDatabase : RoomDatabase() {
                     }
                 }
             }
-            return sInstance
+            return this!!.sInstance!!
         }
-
 
         private fun buildDatabase(appContext: Context,
                                   executors: AppExecutors): AppDatabase {
-            return Room.databaseBuilder<AppDatabase>(appContext, AppDatabase::class.java, DATABASE_NAME)
+            return Room.databaseBuilder(appContext, AppDatabase::class.java, DATABASE_NAME)
                     .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            executors.diskIO().execute(Runnable {
+                            executors.diskIO().execute {
                                 addDelay()
                                 // Generate the data for pre-population
                                 val database = AppDatabase.getInstance(appContext, executors)
@@ -63,17 +80,12 @@ abstract class AppDatabase : RoomDatabase() {
                                 insertData(database, products, comments)
                                 // notify that the database was created and it's ready to be used
                                 database.setDatabaseCreated()
-                            })
+                            }
                         }
                     })
                     .addMigrations(MIGRATION_1_2)
                     .build()
         }
-
-        /**
-         * Check whether the database already exists and expose it via [.getDatabaseCreated]
-         */
-
 
         private fun insertData(database: AppDatabase, products: List<ProductEntity>,
                                comments: List<CommentEntity>) {
@@ -91,7 +103,6 @@ abstract class AppDatabase : RoomDatabase() {
 
         }
 
-
         private val MIGRATION_1_2 = object : Migration(1, 2) {
 
             override fun migrate(database: SupportSQLiteDatabase) {
@@ -100,19 +111,5 @@ abstract class AppDatabase : RoomDatabase() {
 
             }
         }
-    }
-
-    fun getDatabaseCreated(): LiveData<Boolean> {
-        return mIsDatabaseCreated
-    }
-
-    private fun updateDatabaseCreated(context: Context) {
-        if (context.getDatabasePath(DATABASE_NAME).exists()) {
-            setDatabaseCreated()
-        }
-    }
-
-    private fun setDatabaseCreated() {
-        mIsDatabaseCreated.postValue(true)
     }
 }
