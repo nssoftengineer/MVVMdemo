@@ -26,7 +26,7 @@ class Repository() {
     }
 
 companion object {
-    private lateinit var instance: Repository
+    var instance: Repository?=null
     fun getInstance(appDatabase: AppDatabase): Repository {
         if (instance == null) {
             synchronized(Repository::class.java) {
@@ -35,7 +35,7 @@ companion object {
                 }
             }
         }
-        return instance
+        return this!!.instance!!
     }
 }
 

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -56,9 +57,9 @@ dependencies {
     // Architecture components
     implementation deps.lifecycle.runtime
     implementation deps.lifecycle.extensions
-    annotationProcessor deps.lifecycle.compiler
+    kapt  deps.lifecycle.compiler
     implementation deps.room.runtime
-    annotationProcessor deps.room.compiler
+    kapt  deps.room.compiler
 
     // Android Testing Support Library's runner and rules
     androidTestImplementation deps.atsl.core

@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.app_kotlin.db.entity.CommentEntity
-import com.example.app_kotlin.model.Comment
 
 @Dao
 interface CommentDao {
