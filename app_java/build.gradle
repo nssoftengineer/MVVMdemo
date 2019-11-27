@@ -53,17 +53,15 @@ dependencies {
     implementation deps.room.runtime
     annotationProcessor deps.room.compiler
 
-    // Android Testing Support Library's runner and rules
-    androidTestImplementation deps.atsl.core
-    androidTestImplementation deps.atsl.runner
-    androidTestImplementation deps.atsl.rules
-    androidTestImplementation deps.room.testing
-    androidTestImplementation deps.arch_core.testing
+    // Api Call
+    implementation deps.retrofit.runtime
+    implementation deps.retrofit.gson
+    implementation deps.okhttp_logging_interceptor
+    implementation deps.retrofit_rx
+    implementation deps.rx_android_io
+    implementation deps.rx_java_io
+    implementation "com.jakewharton.rxbinding2:rxbinding:2.0.0"
 
-    // Espresso UI Testing
-    androidTestImplementation deps.espresso.core
-    androidTestImplementation deps.espresso.contrib
-    androidTestImplementation deps.espresso.intents
 
     // Resolve conflicts between main and test APK:
     androidTestImplementation deps.support.annotations
