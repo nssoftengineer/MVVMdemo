@@ -25,7 +25,7 @@ public class App extends Application {
 
     public Repository getRepository()
     {
-        return Repository.getInstance(getDatabase());
+        return Repository.getInstance(getDatabase(),getApiService());
     }
 
 
