@@ -1,18 +1,12 @@
 
-package com.example.mvvmdemo.model;
+package com.example.mvvmdemo.model.product;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
+import java.io.Serializable;
 import java.util.List;
 
-public class Data {
+public class Data implements Serializable {
 
-    @SerializedName("code")
-    @Expose
     private String code;
-    @SerializedName("content")
-    @Expose
     private List<Content> content = null;
 
     public String getCode() {

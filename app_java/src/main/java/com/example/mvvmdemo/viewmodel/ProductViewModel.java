@@ -7,7 +7,10 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,6 +18,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.mvvmdemo.app.App;
 import com.example.mvvmdemo.db.entity.CommentEntity;
 import com.example.mvvmdemo.db.entity.ProductEntity;
+import com.example.mvvmdemo.model.CommonError;
+import com.example.mvvmdemo.model.product.Data;
 import com.example.mvvmdemo.utils.Repository;
 
 import java.util.List;
@@ -22,8 +27,10 @@ import java.util.List;
 public class ProductViewModel extends AndroidViewModel {
 
     private final LiveData<ProductEntity> mObservableProduct;
+    private final MutableLiveData<Data> dataLiveData=new MutableLiveData<>();
 
     public ObservableField<ProductEntity> product = new ObservableField<>();
+    private Repository repository;
 
     private final int mProductId;
 
@@ -33,7 +40,7 @@ public class ProductViewModel extends AndroidViewModel {
                             final int productId) {
         super(application);
         mProductId = productId;
-
+        this.repository=repository;
         mObservableComments = repository.loadComments(mProductId);
         mObservableProduct = repository.loadProduct(mProductId);
     }
@@ -51,6 +58,29 @@ public class ProductViewModel extends AndroidViewModel {
 
     public void setProduct(ProductEntity product) {
         this.product.set(product);
+    }
+
+    public LiveData<Data> getDataFromApi(LifecycleOwner lifecycleOwner) {
+        repository.getDataFromApi().observe(lifecycleOwner, new Observer<Data>() {
+            @Override
+            public void onChanged(Data data) {
+                dataLiveData.setValue(data);
+            }
+        });
+        return dataLiveData;
+    }
+
+    public MutableLiveData<CommonError> getError(LifecycleOwner lifecycleOwner)
+    {
+         MutableLiveData<CommonError> commonErrorMutableLiveData=new MutableLiveData<>();
+         repository.getError().observe(lifecycleOwner, new Observer<CommonError>() {
+             @Override
+             public void onChanged(CommonError commonError) {
+                 commonErrorMutableLiveData.setValue(commonError);
+             }
+         });
+
+        return commonErrorMutableLiveData;
     }
 
 

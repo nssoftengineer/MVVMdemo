@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -19,6 +20,10 @@ import com.example.mvvmdemo.databinding.ProductFragmentBinding;
 import com.example.mvvmdemo.db.entity.CommentEntity;
 import com.example.mvvmdemo.db.entity.ProductEntity;
 import com.example.mvvmdemo.model.Comment;
+import com.example.mvvmdemo.model.CommonError;
+import com.example.mvvmdemo.model.product.Content;
+import com.example.mvvmdemo.model.product.Data;
+import com.example.mvvmdemo.model.product.Product;
 import com.example.mvvmdemo.view.adapter.CommentAdapter;
 import com.example.mvvmdemo.viewmodel.ProductViewModel;
 
@@ -31,6 +36,7 @@ public class ProductFragment extends Fragment {
     private ProductFragmentBinding mBinding;
 
     private CommentAdapter mCommentAdapter;
+    private ProductViewModel model;
 
     @Nullable
     @Override
@@ -42,16 +48,42 @@ public class ProductFragment extends Fragment {
         // Create and set the adapter for the RecyclerView.
         mCommentAdapter = new CommentAdapter(mCommentClickCallback);
         mBinding.commentList.setAdapter(mCommentAdapter);
+
         return mBinding.getRoot();
     }
 
     private final CommentClickCallback mCommentClickCallback = new CommentClickCallback() {
         @Override
         public void onClick(Comment comment) {
-            // no-op
+           model.getDataFromApi(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), new Observer<Data>() {
+               @Override
+               public void onChanged(Data data) {
+                   String productName = "";
+                   for(Content  content:data.getContent())
+                   {
+                       if(content.getProducts()!=null)
+                       for(Product product:content.getProducts()){
+                           if(product!=null)
+                           productName+= product.getName()+"\n";
+                       }
+                   }
+                   Toast.makeText(getActivity(),productName,Toast.LENGTH_LONG).show();
+               }
+           });
 
         }
     };
+
+    public void onError()
+    {
+        model.getError(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), new Observer<CommonError>() {
+            @Override
+            public void onChanged(CommonError commonError) {
+                Toast.makeText(getActivity(),commonError.getThrowable().getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -60,17 +92,17 @@ public class ProductFragment extends Fragment {
         ProductViewModel.Factory factory = new ProductViewModel.Factory(
                 getActivity().getApplication(), getArguments().getInt(KEY_PRODUCT_ID));
 
-        final ProductViewModel model = ViewModelProviders.of(this, factory)
+         model = ViewModelProviders.of(this, factory)
                 .get(ProductViewModel.class);
 
 
 
         mBinding.setProductViewModel(model);
-
-        subscribeToModel(model);
+        onError();
+        subscribeToModel();
     }
 
-    private void subscribeToModel(final ProductViewModel model) {
+    private void subscribeToModel() {
 
         // Observe product data
         model.getObservableProduct().observe(this, new Observer<ProductEntity>() {

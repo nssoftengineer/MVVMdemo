@@ -1,22 +1,34 @@
 package com.example.mvvmdemo.utils;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.mvvmdemo.api.apiservice.ApiService;
 import com.example.mvvmdemo.db.AppDatabase;
 import com.example.mvvmdemo.db.entity.CommentEntity;
 import com.example.mvvmdemo.db.entity.ProductEntity;
+import com.example.mvvmdemo.model.CommonError;
+import com.example.mvvmdemo.model.product.Data;
 
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+
 public class Repository {
 
+    private static final String TAG = "Repository" ;
     private static Repository instance;
     private final AppDatabase mAppDatabase;
     private ApiService apiService;
     private MediatorLiveData<List<ProductEntity>> mObservableProducts;
+    private MutableLiveData<Data> mObservableData =new MutableLiveData<>();
+    private MutableLiveData<CommonError> error =new MutableLiveData<>();
 
 
     public Repository(AppDatabase appDatabase, ApiService apiService) {
@@ -62,5 +74,29 @@ public class Repository {
 
     public LiveData<List<ProductEntity>> searchProducts(String query) {
         return mAppDatabase.productDao().searchAllProducts(query);
+    }
+
+    public LiveData<Data> getDataFromApi() {
+        apiService.getProduct().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<Data>() {
+                    @Override
+                    public void onSuccess(Data data) {
+                        mObservableData.setValue(data);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError: "+e.getMessage());
+                    CommonError commonError=new CommonError();
+                    commonError.setThrowable(e);
+                    error.setValue(commonError);
+                    }
+                });
+        return mObservableData;
+    }
+
+    public MutableLiveData<CommonError> getError() {
+        return error;
     }
 }

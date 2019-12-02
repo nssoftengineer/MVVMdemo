@@ -1,30 +1,25 @@
 
-package com.example.mvvmdemo.model;
+package com.example.mvvmdemo.model.product;
+
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Content {
+public class Content implements Serializable {
 
-    @SerializedName("sectionType")
-    @Expose
     private String sectionType;
-    @SerializedName("name")
-    @Expose
+
     private String name;
-    @SerializedName("products")
-    @Expose
+
     private List<Product> products = null;
-    @SerializedName("bannerImage")
-    @Expose
+
     private String bannerImage;
-    @SerializedName("firstImage")
-    @Expose
+
     private String firstImage;
-    @SerializedName("secondImage")
-    @Expose
+
     private String secondImage;
 
     public String getSectionType() {
