@@ -7,12 +7,13 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
-import com.example.mvvmdemo.api.apiservice.ApiService;
+import com.example.apimodule.api.apiservice.ApiService;
+import com.example.apimodule.api.product.Data;
 import com.example.mvvmdemo.db.AppDatabase;
 import com.example.mvvmdemo.db.entity.CommentEntity;
 import com.example.mvvmdemo.db.entity.ProductEntity;
 import com.example.mvvmdemo.model.CommonError;
-import com.example.mvvmdemo.model.product.Data;
+
 
 import java.util.List;
 
@@ -20,6 +21,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * createdBy neeraj singh 3/12/2019
+ *
+ */
 public class Repository {
 
     private static final String TAG = "Repository" ;
@@ -27,8 +32,8 @@ public class Repository {
     private final AppDatabase mAppDatabase;
     private ApiService apiService;
     private MediatorLiveData<List<ProductEntity>> mObservableProducts;
-    private MutableLiveData<Data> mObservableData =new MutableLiveData<>();
-    private MutableLiveData<CommonError> error =new MutableLiveData<>();
+    private MediatorLiveData<Data> mObservableData =new MediatorLiveData<>();
+    private MediatorLiveData<CommonError> error =new MediatorLiveData<>();
 
 
     public Repository(AppDatabase appDatabase, ApiService apiService) {
@@ -84,7 +89,6 @@ public class Repository {
                     public void onSuccess(Data data) {
                         mObservableData.setValue(data);
                     }
-
                     @Override
                     public void onError(Throwable e) {
                         Log.d(TAG, "onError: "+e.getMessage());

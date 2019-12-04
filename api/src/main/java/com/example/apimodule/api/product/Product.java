@@ -1,7 +1,11 @@
-package com.example.mvvmdemo.model.product;
+package com.example.apimodule.api.product;
 
 import java.io.Serializable;
 
+/**
+ * createdBy neeraj singh 2/12/2019
+ *
+ */
 public class Product implements Serializable {
     private String name;
     private String price;

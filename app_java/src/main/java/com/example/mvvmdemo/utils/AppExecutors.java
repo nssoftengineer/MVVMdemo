@@ -10,6 +10,10 @@ import androidx.annotation.NonNull;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+/**
+ * createdBy neeraj singh 2/12/2019
+ *
+ */
 public class AppExecutors {
 
     private final Executor mDiskIO;

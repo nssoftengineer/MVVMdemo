@@ -1,4 +1,4 @@
-package com.example.mvvmdemo.api;
+package com.example.apimodule.api;
 
 import android.content.Context;
 
@@ -14,6 +14,11 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
+/**
+ * createdBy neeraj singh 2/12/2019
+ *
+ */
 public class ApiClient {
 
     private static Retrofit retrofit = null;

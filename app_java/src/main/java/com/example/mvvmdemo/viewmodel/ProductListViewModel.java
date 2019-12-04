@@ -32,7 +32,9 @@ public class ProductListViewModel extends AndroidViewModel {
         LiveData<List<ProductEntity>> products = mRepository.getProducts();
 
         // observe the changes of the products from the database and forward them
-        mObservableProducts.addSource(products, mObservableProducts::setValue);
+        mObservableProducts.addSource(products, (List<ProductEntity> value) -> {
+            mObservableProducts.setValue(value);
+        });
     }
 
     /**

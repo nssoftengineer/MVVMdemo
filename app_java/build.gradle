@@ -53,14 +53,15 @@ dependencies {
     implementation deps.room.runtime
     annotationProcessor deps.room.compiler
 
-    // Api Call
-    implementation deps.retrofit.runtime
-    implementation deps.retrofit.gson
-    implementation deps.okhttp_logging_interceptor
-    implementation deps.retrofit_rx
+
+    implementation "com.jakewharton.rxbinding2:rxbinding:2.0.0"
     implementation deps.rx_android_io
     implementation deps.rx_java_io
-    implementation "com.jakewharton.rxbinding2:rxbinding:2.0.0"
+
+    //api module
+    implementation project(path: ':api')
+    //util module
+    implementation project(path: ':utils')
 
 
     // Resolve conflicts between main and test APK:

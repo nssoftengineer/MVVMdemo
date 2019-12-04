@@ -1,13 +1,14 @@
 
-package com.example.mvvmdemo.model.product;
+package com.example.apimodule.api.product;
 
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * createdBy neeraj singh 2/12/2019
+ *
+ */
 public class Content implements Serializable {
 
     private String sectionType;

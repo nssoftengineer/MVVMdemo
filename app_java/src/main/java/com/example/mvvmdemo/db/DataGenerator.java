@@ -60,7 +60,6 @@ public class DataGenerator {
                 comments.add(comment);
             }
         }
-
         return comments;
     }
 }

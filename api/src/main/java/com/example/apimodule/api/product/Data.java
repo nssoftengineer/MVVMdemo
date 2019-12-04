@@ -1,9 +1,13 @@
 
-package com.example.mvvmdemo.model.product;
+package com.example.apimodule.api.product;
 
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * createdBy neeraj singh 2/12/2019
+ *
+ */
 public class Data implements Serializable {
 
     private String code;

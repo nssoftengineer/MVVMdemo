@@ -14,18 +14,18 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-
+import com.example.apimodule.api.product.Content;
+import com.example.apimodule.api.product.Data;
+import com.example.apimodule.api.product.Product;
 import com.example.mvvmdemo.R;
 import com.example.mvvmdemo.databinding.ProductFragmentBinding;
 import com.example.mvvmdemo.db.entity.CommentEntity;
 import com.example.mvvmdemo.db.entity.ProductEntity;
 import com.example.mvvmdemo.model.Comment;
 import com.example.mvvmdemo.model.CommonError;
-import com.example.mvvmdemo.model.product.Content;
-import com.example.mvvmdemo.model.product.Data;
-import com.example.mvvmdemo.model.product.Product;
 import com.example.mvvmdemo.view.adapter.CommentAdapter;
 import com.example.mvvmdemo.viewmodel.ProductViewModel;
+import com.example.utils.Helper;
 
 import java.util.List;
 
@@ -41,7 +41,7 @@ public class ProductFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
+                             @Nullable Bundle savedInstanceState) {
         // Inflate this data binding layout
         mBinding = DataBindingUtil.inflate(inflater, R.layout.product_fragment, container, false);
 
@@ -55,31 +55,32 @@ public class ProductFragment extends Fragment {
     private final CommentClickCallback mCommentClickCallback = new CommentClickCallback() {
         @Override
         public void onClick(Comment comment) {
-           model.getDataFromApi(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), new Observer<Data>() {
-               @Override
-               public void onChanged(Data data) {
-                   String productName = "";
-                   for(Content  content:data.getContent())
-                   {
-                       if(content.getProducts()!=null)
-                       for(Product product:content.getProducts()){
-                           if(product!=null)
-                           productName+= product.getName()+"\n";
-                       }
-                   }
-                   Toast.makeText(getActivity(),productName,Toast.LENGTH_LONG).show();
-               }
-           });
-
+            if(Helper.isOnline(getActivity())) {
+                model.getDataFromApi(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), new Observer<Data>() {
+                    @Override
+                    public void onChanged(Data data) {
+                        String productName = "";
+                        for (Content content : data.getContent()) {
+                            if (content.getProducts() != null)
+                                for (Product product : content.getProducts()) {
+                                    if (product != null)
+                                        productName += product.getName() + "\n";
+                                }
+                        }
+                        Toast.makeText(getActivity(), productName, Toast.LENGTH_LONG).show();
+                    }
+                });
+            }else{
+                Toast.makeText(getActivity(),"No internet.",Toast.LENGTH_LONG).show();
+            }
         }
     };
 
-    public void onError()
-    {
+    public void onError() {
         model.getError(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), new Observer<CommonError>() {
             @Override
             public void onChanged(CommonError commonError) {
-                Toast.makeText(getActivity(),commonError.getThrowable().getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), commonError.getThrowable().getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -92,9 +93,8 @@ public class ProductFragment extends Fragment {
         ProductViewModel.Factory factory = new ProductViewModel.Factory(
                 getActivity().getApplication(), getArguments().getInt(KEY_PRODUCT_ID));
 
-         model = ViewModelProviders.of(this, factory)
+        model = ViewModelProviders.of(this, factory)
                 .get(ProductViewModel.class);
-
 
 
         mBinding.setProductViewModel(model);
@@ -126,7 +126,9 @@ public class ProductFragment extends Fragment {
         });
     }
 
-    /** Creates product fragment for specific product ID */
+    /**
+     * Creates product fragment for specific product ID
+     */
     public static ProductFragment forProduct(int productId) {
         ProductFragment fragment = new ProductFragment();
         Bundle args = new Bundle();
