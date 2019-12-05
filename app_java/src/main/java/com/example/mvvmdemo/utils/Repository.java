@@ -81,7 +81,7 @@ public class Repository {
         return mAppDatabase.productDao().searchAllProducts(query);
     }
 
-    public LiveData<Data> getDataFromApi() {
+    public LiveData<Data> getDataFromApi(String action) {
         apiService.getProduct().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<Data>() {
@@ -94,6 +94,7 @@ public class Repository {
                         Log.d(TAG, "onError: "+e.getMessage());
                     CommonError commonError=new CommonError();
                     commonError.setThrowable(e);
+                    commonError.setAction(action);
                     error.setValue(commonError);
                     }
                 });

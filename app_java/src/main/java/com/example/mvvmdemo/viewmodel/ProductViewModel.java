@@ -60,8 +60,8 @@ public class ProductViewModel extends AndroidViewModel {
     /**
      * api call here
      */
-    public LiveData<Data> getDataFromApi(LifecycleOwner lifecycleOwner) {
-        repository.getDataFromApi().observe(lifecycleOwner, new Observer<Data>() {
+    public LiveData<Data> getDataFromApi(LifecycleOwner lifecycleOwner,String action) {
+        repository.getDataFromApi(action).observe(lifecycleOwner, new Observer<Data>() {
             @Override
             public void onChanged(Data data) {
                 dataLiveData.setValue(data);

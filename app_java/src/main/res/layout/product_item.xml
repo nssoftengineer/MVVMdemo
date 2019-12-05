@@ -16,6 +16,7 @@
         android:orientation="horizontal"
         android:layout_marginStart="@dimen/item_horizontal_margin"
         android:layout_marginEnd="@dimen/item_horizontal_margin"
+        android:layout_marginTop="4dp"
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
@@ -26,16 +27,19 @@
 
             <TextView
                 android:id="@+id/name"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/cd_product_name"
                 android:text="@{product.name}"/>
 
             <TextView
+                android:textColor="@color/colorBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="5dp"
+                android:textStyle="bold"
                 android:text="@{@string/product_price(product.price)}"/>
 
             <TextView

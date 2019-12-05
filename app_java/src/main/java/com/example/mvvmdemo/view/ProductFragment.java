@@ -23,6 +23,7 @@ import com.example.mvvmdemo.databinding.ProductFragmentBinding;
 import com.example.mvvmdemo.model.CommentEntity;
 import com.example.mvvmdemo.model.ProductEntity;
 import com.example.mvvmdemo.model.CommonError;
+import com.example.mvvmdemo.utils.Constant;
 import com.example.mvvmdemo.view.adapter.CommentAdapter;
 import com.example.mvvmdemo.viewmodel.ProductViewModel;
 import com.example.utils.Helper;
@@ -59,7 +60,7 @@ public class ProductFragment extends Fragment {
             if(Helper.isOnline(getActivity())) {
                 showProgress();
                 //api call
-                model.getDataFromApi(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), new Observer<Data>() {
+                model.getDataFromApi(getViewLifecycleOwner(), Constant.PRODUCT_API).observe(getViewLifecycleOwner(), new Observer<Data>() {
                     @Override
                     public void onChanged(Data data) {
                         String productName = "";
@@ -84,6 +85,7 @@ public class ProductFragment extends Fragment {
         model.getError(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), new Observer<CommonError>() {
             @Override
             public void onChanged(CommonError commonError) {
+                if(commonError.getAction().equalsIgnoreCase(Constant.PRODUCT_API))
                 Toast.makeText(getActivity(), commonError.getThrowable().getMessage(), Toast.LENGTH_LONG).show();
             }
         });
