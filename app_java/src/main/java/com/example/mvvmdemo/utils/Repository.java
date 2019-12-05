@@ -32,8 +32,8 @@ public class Repository {
     private final AppDatabase mAppDatabase;
     private ApiService apiService;
     private MediatorLiveData<List<ProductEntity>> mObservableProducts;
-    private MediatorLiveData<Data> mObservableData =new MediatorLiveData<>();
-    private MediatorLiveData<CommonError> error =new MediatorLiveData<>();
+    private MutableLiveData<Data> mObservableData =new MutableLiveData<>();
+    private MutableLiveData<CommonError> error =new MutableLiveData<>();
 
 
     public Repository(AppDatabase appDatabase, ApiService apiService) {

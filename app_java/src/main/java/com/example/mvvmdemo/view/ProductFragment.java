@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -37,6 +38,7 @@ public class ProductFragment extends Fragment {
 
     private CommentAdapter mCommentAdapter;
     private ProductViewModel model;
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
@@ -48,7 +50,7 @@ public class ProductFragment extends Fragment {
         // Create and set the adapter for the RecyclerView.
         mCommentAdapter = new CommentAdapter(mCommentClickCallback);
         mBinding.commentList.setAdapter(mCommentAdapter);
-
+        progressBar = ((MainActivity)getActivity()).progressBar;
         return mBinding.getRoot();
     }
 
@@ -56,6 +58,8 @@ public class ProductFragment extends Fragment {
         @Override
         public void onClick(Comment comment) {
             if(Helper.isOnline(getActivity())) {
+                showProgress();
+                //api call
                 model.getDataFromApi(getViewLifecycleOwner()).observe(getViewLifecycleOwner(), new Observer<Data>() {
                     @Override
                     public void onChanged(Data data) {
@@ -68,6 +72,7 @@ public class ProductFragment extends Fragment {
                                 }
                         }
                         Toast.makeText(getActivity(), productName, Toast.LENGTH_LONG).show();
+                        hideProgress();
                     }
                 });
             }else{
@@ -135,5 +140,12 @@ public class ProductFragment extends Fragment {
         args.putInt(KEY_PRODUCT_ID, productId);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+    public void hideProgress() {
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }

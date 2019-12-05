@@ -2,12 +2,12 @@ package com.example.mvvmdemo.app;
 
 import android.app.Application;
 
+import com.example.apimodule.api.ApiClient;
 import com.example.apimodule.api.apiservice.ApiService;
 import com.example.mvvmdemo.db.AppDatabase;
 import com.example.mvvmdemo.utils.AppExecutors;
 import com.example.mvvmdemo.utils.Repository;
 
-import static com.example.apimodule.api.ApiClient.getClient;
 
 
 /**
@@ -40,7 +40,7 @@ public class App extends Application {
         if (apiService == null) {
             synchronized (ApiService.class) {
                 if (apiService == null) {
-                    apiService = getClient(getApplicationContext(), BASE_URL).create(ApiService.class);
+                    apiService = ApiClient.getClient(getApplicationContext(), BASE_URL).create(ApiService.class);
                 }
             }
         }

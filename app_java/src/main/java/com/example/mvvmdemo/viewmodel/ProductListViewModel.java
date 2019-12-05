@@ -14,11 +14,15 @@ import com.example.mvvmdemo.utils.Repository;
 
 import java.util.List;
 
+
+/**
+ * createdBy neeraj singh 2/12/2019
+ *
+ */
 public class ProductListViewModel extends AndroidViewModel {
 
     private final Repository mRepository;
 
-    // MediatorLiveData can observe other LiveData objects and react on their emissions.
     private final MediatorLiveData<List<ProductEntity>> mObservableProducts;
 
     public ProductListViewModel(Application application) {

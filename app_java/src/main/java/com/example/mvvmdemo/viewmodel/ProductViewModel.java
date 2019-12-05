@@ -27,13 +27,10 @@ import java.util.List;
 public class ProductViewModel extends AndroidViewModel {
 
     private final LiveData<ProductEntity> mObservableProduct;
-    private final MediatorLiveData<Data> dataLiveData=new MediatorLiveData<>();
-
+    private final MutableLiveData<Data> dataLiveData=new MutableLiveData<>();
     public ObservableField<ProductEntity> product = new ObservableField<>();
     private Repository repository;
-
     private final int mProductId;
-
     private final LiveData<List<CommentEntity>> mObservableComments;
 
     public ProductViewModel(@NonNull Application application, Repository repository,
@@ -60,6 +57,10 @@ public class ProductViewModel extends AndroidViewModel {
         this.product.set(product);
     }
 
+
+    /**
+     * api call here
+     */
     public LiveData<Data> getDataFromApi(LifecycleOwner lifecycleOwner) {
         repository.getDataFromApi().observe(lifecycleOwner, new Observer<Data>() {
             @Override
@@ -83,19 +84,12 @@ public class ProductViewModel extends AndroidViewModel {
         return commonErrorMutableLiveData;
     }
 
-    public MediatorLiveData<Data> getDataLiveData() {
-        return dataLiveData;
-    }
-
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
 
         @NonNull
         private final Application mApplication;
-
         private final int mProductId;
-
         private final Repository mRepository;
-
         public Factory(@NonNull Application application, int productId) {
             mApplication = application;
             mProductId = productId;

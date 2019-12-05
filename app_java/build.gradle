@@ -57,6 +57,7 @@ dependencies {
     implementation "com.jakewharton.rxbinding2:rxbinding:2.0.0"
     implementation deps.rx_android_io
     implementation deps.rx_java_io
+    implementation deps.retrofit.runtime
 
     //api module
     implementation project(path: ':api')
