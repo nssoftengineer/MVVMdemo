@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mvvmdemo.R;
 import com.example.mvvmdemo.databinding.ProductItemBinding;
-import com.example.mvvmdemo.model.Product;
+import com.example.mvvmdemo.model.ProductEntity;
 import com.example.mvvmdemo.view.ProductClickCallback;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.Objects;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
-    List<? extends Product> mProductList;
+    List<? extends ProductEntity> mProductList;
 
     @Nullable
     private final ProductClickCallback mProductClickCallback;
@@ -30,7 +30,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         setHasStableIds(true);
     }
 
-    public void setProductList(final List<? extends Product> productList) {
+    public void setProductList(final List<? extends ProductEntity> productList) {
         if (mProductList == null) {
             mProductList = productList;
             notifyItemRangeInserted(0, productList.size());
@@ -54,8 +54,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    Product newProduct = productList.get(newItemPosition);
-                    Product oldProduct = mProductList.get(oldItemPosition);
+                    ProductEntity newProduct = productList.get(newItemPosition);
+                    ProductEntity oldProduct = mProductList.get(oldItemPosition);
                     return newProduct.getId() == oldProduct.getId()
                             && Objects.equals(newProduct.getDescription(), oldProduct.getDescription())
                             && Objects.equals(newProduct.getName(), oldProduct.getName())

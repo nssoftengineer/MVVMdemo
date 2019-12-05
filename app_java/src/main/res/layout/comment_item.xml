@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="comment"
-                  type="com.example.mvvmdemo.model.Comment"/>
+                  type="com.example.mvvmdemo.model.CommentEntity"/>
         <variable name="callback"
                   type="com.example.mvvmdemo.view.CommentClickCallback"/>
     </data>

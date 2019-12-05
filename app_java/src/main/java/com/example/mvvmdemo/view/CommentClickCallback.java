@@ -3,8 +3,8 @@
 package com.example.mvvmdemo.view;
 
 
-import com.example.mvvmdemo.model.Comment;
+import com.example.mvvmdemo.model.CommentEntity;
 
 public interface CommentClickCallback {
-    void onClick(Comment comment);
+    void onClick(CommentEntity comment);
 }

@@ -1,20 +1,18 @@
-package com.example.mvvmdemo.db.entity;
+package com.example.mvvmdemo.model;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.example.mvvmdemo.model.Product;
-
 @Entity(tableName = "products")
-public class ProductEntity implements Product {
+public class ProductEntity{
     @PrimaryKey
     private int id;
     private String name;
     private String description;
     private int price;
 
-    @Override
+
     public int getId() {
         return id;
     }
@@ -23,7 +21,7 @@ public class ProductEntity implements Product {
         this.id = id;
     }
 
-    @Override
+
     public String getName() {
         return name;
     }
@@ -32,7 +30,7 @@ public class ProductEntity implements Product {
         this.name = name;
     }
 
-    @Override
+
     public String getDescription() {
         return description;
     }
@@ -41,7 +39,6 @@ public class ProductEntity implements Product {
         this.description = description;
     }
 
-    @Override
     public int getPrice() {
         return price;
     }
@@ -61,7 +58,7 @@ public class ProductEntity implements Product {
         this.price = price;
     }
 
-    public ProductEntity(Product product) {
+    public ProductEntity(ProductEntity product) {
         this.id = product.getId();
         this.name = product.getName();
         this.description = product.getDescription();

@@ -1,6 +1,6 @@
 
 
-package com.example.mvvmdemo.db.entity;
+package com.example.mvvmdemo.model;
 
 import androidx.room.Entity;
 import androidx.room.Fts4;

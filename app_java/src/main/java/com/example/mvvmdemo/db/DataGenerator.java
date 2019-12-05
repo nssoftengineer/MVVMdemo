@@ -3,9 +3,8 @@
 package com.example.mvvmdemo.db;
 
 
-import com.example.mvvmdemo.db.entity.CommentEntity;
-import com.example.mvvmdemo.db.entity.ProductEntity;
-import com.example.mvvmdemo.model.Product;
+import com.example.mvvmdemo.model.CommentEntity;
+import com.example.mvvmdemo.model.ProductEntity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,7 +48,7 @@ public class DataGenerator {
         List<CommentEntity> comments = new ArrayList<>();
         Random rnd = new Random();
 
-        for (Product product : products) {
+        for (ProductEntity product : products) {
             int commentsNumber = rnd.nextInt(5) + 1;
             for (int i = 0; i < commentsNumber; i++) {
                 CommentEntity comment = new CommentEntity();

@@ -1,6 +1,6 @@
 
 
-package com.example.mvvmdemo.db.entity;
+package com.example.mvvmdemo.model;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -8,7 +8,6 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import com.example.mvvmdemo.model.Comment;
 
 import java.util.Date;
 
@@ -20,14 +19,14 @@ import java.util.Date;
                         onDelete = ForeignKey.CASCADE)},
         indices = {@Index(value = "productId")
         })
-public class CommentEntity implements Comment {
+public class CommentEntity {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private int productId;
     private String text;
     private Date postedAt;
 
-    @Override
+
     public int getId() {
         return id;
     }
@@ -36,7 +35,6 @@ public class CommentEntity implements Comment {
         this.id = id;
     }
 
-    @Override
     public int getProductId() {
         return productId;
     }
@@ -45,7 +43,7 @@ public class CommentEntity implements Comment {
         this.productId = productId;
     }
 
-    @Override
+
     public String getText() {
         return text;
     }
@@ -54,7 +52,6 @@ public class CommentEntity implements Comment {
         this.text = text;
     }
 
-    @Override
     public Date getPostedAt() {
         return postedAt;
     }

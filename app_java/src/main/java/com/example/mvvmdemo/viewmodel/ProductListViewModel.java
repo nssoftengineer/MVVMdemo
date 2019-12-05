@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MediatorLiveData;
 
 import com.example.mvvmdemo.app.App;
-import com.example.mvvmdemo.db.entity.ProductEntity;
+import com.example.mvvmdemo.model.ProductEntity;
 import com.example.mvvmdemo.utils.Repository;
 
 import java.util.List;

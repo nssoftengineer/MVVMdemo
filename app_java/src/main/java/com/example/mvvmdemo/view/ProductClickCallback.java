@@ -3,8 +3,8 @@
 package com.example.mvvmdemo.view;
 
 
-import com.example.mvvmdemo.model.Product;
+import com.example.mvvmdemo.model.ProductEntity;
 
 public interface ProductClickCallback {
-    void onClick(Product product);
+    void onClick(ProductEntity product);
 }

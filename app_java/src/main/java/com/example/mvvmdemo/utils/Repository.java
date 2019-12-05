@@ -10,8 +10,8 @@ import androidx.lifecycle.Observer;
 import com.example.apimodule.api.apiservice.ApiService;
 import com.example.apimodule.api.product.Data;
 import com.example.mvvmdemo.db.AppDatabase;
-import com.example.mvvmdemo.db.entity.CommentEntity;
-import com.example.mvvmdemo.db.entity.ProductEntity;
+import com.example.mvvmdemo.model.CommentEntity;
+import com.example.mvvmdemo.model.ProductEntity;
 import com.example.mvvmdemo.model.CommonError;
 
 

@@ -19,8 +19,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mvvmdemo.R;
 import com.example.mvvmdemo.databinding.ListFragmentBinding;
-import com.example.mvvmdemo.db.entity.ProductEntity;
-import com.example.mvvmdemo.model.Product;
+import com.example.mvvmdemo.model.ProductEntity;
 import com.example.mvvmdemo.view.adapter.ProductAdapter;
 import com.example.mvvmdemo.viewmodel.ProductListViewModel;
 
@@ -87,7 +86,7 @@ public class ProductListFragment extends Fragment {
 
     private final ProductClickCallback mProductClickCallback = new ProductClickCallback() {
         @Override
-        public void onClick(Product product) {
+        public void onClick(ProductEntity product) {
 
             if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
                 ((MainActivity) getActivity()).show(product);

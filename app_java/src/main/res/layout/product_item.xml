@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="product"
-                  type="com.example.mvvmdemo.model.Product"/>
+                  type="com.example.mvvmdemo.model.ProductEntity"/>
         <variable name="callback"
                   type="com.example.mvvmdemo.view.ProductClickCallback"/>
     </data>

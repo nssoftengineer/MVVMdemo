@@ -9,7 +9,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 
-import com.example.mvvmdemo.db.entity.CommentEntity;
+import com.example.mvvmdemo.model.CommentEntity;
 
 import java.util.List;
 

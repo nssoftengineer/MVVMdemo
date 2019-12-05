@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.mvvmdemo.R;
-import com.example.mvvmdemo.model.Product;
+import com.example.mvvmdemo.model.ProductEntity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     /** Shows the product detail fragment */
-    public void show(Product product) {
+    public void show(ProductEntity product) {
 
         ProductFragment productFragment = ProductFragment.forProduct(product.getId());
 

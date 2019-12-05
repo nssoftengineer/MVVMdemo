@@ -8,7 +8,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.mvvmdemo.db.entity.ProductEntity;
+import com.example.mvvmdemo.model.ProductEntity;
 
 import java.util.List;
 

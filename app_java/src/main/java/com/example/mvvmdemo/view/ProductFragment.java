@@ -20,9 +20,8 @@ import com.example.apimodule.api.product.Data;
 import com.example.apimodule.api.product.Product;
 import com.example.mvvmdemo.R;
 import com.example.mvvmdemo.databinding.ProductFragmentBinding;
-import com.example.mvvmdemo.db.entity.CommentEntity;
-import com.example.mvvmdemo.db.entity.ProductEntity;
-import com.example.mvvmdemo.model.Comment;
+import com.example.mvvmdemo.model.CommentEntity;
+import com.example.mvvmdemo.model.ProductEntity;
 import com.example.mvvmdemo.model.CommonError;
 import com.example.mvvmdemo.view.adapter.CommentAdapter;
 import com.example.mvvmdemo.viewmodel.ProductViewModel;
@@ -56,7 +55,7 @@ public class ProductFragment extends Fragment {
 
     private final CommentClickCallback mCommentClickCallback = new CommentClickCallback() {
         @Override
-        public void onClick(Comment comment) {
+        public void onClick(CommentEntity comment) {
             if(Helper.isOnline(getActivity())) {
                 showProgress();
                 //api call

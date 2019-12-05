@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mvvmdemo.R;
 import com.example.mvvmdemo.databinding.CommentItemBinding;
-import com.example.mvvmdemo.model.Comment;
+import com.example.mvvmdemo.model.CommentEntity;
 import com.example.mvvmdemo.view.CommentClickCallback;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
 
-    private List<? extends Comment> mCommentList;
+    private List<? extends CommentEntity> mCommentList;
 
     @Nullable
     private final CommentClickCallback mCommentClickCallback;
@@ -30,7 +30,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         mCommentClickCallback = commentClickCallback;
     }
 
-    public void setCommentList(final List<? extends Comment> comments) {
+    public void setCommentList(final List<? extends CommentEntity> comments) {
         if (mCommentList == null) {
             mCommentList = comments;
             notifyItemRangeInserted(0, comments.size());
@@ -48,16 +48,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
                 @Override
                 public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    Comment old = mCommentList.get(oldItemPosition);
-                    Comment comment = comments.get(newItemPosition);
+                    CommentEntity old = mCommentList.get(oldItemPosition);
+                    CommentEntity comment = comments.get(newItemPosition);
                     return old.getId() == comment.getId();
                 }
 
                 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    Comment old = mCommentList.get(oldItemPosition);
-                    Comment comment = comments.get(newItemPosition);
+                    CommentEntity old = mCommentList.get(oldItemPosition);
+                    CommentEntity comment = comments.get(newItemPosition);
                     return old.getId() == comment.getId()
                             && old.getPostedAt() == comment.getPostedAt()
                             && old.getProductId() == comment.getProductId()

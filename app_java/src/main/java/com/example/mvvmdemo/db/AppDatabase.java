@@ -18,9 +18,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.mvvmdemo.db.converter.DateConverter;
 import com.example.mvvmdemo.db.dao.CommentDao;
 import com.example.mvvmdemo.db.dao.ProductDao;
-import com.example.mvvmdemo.db.entity.CommentEntity;
-import com.example.mvvmdemo.db.entity.ProductEntity;
-import com.example.mvvmdemo.db.entity.ProductFtsEntity;
+import com.example.mvvmdemo.model.CommentEntity;
+import com.example.mvvmdemo.model.ProductEntity;
+import com.example.mvvmdemo.model.ProductFtsEntity;
 import com.example.mvvmdemo.utils.AppExecutors;
 
 import java.util.List;
