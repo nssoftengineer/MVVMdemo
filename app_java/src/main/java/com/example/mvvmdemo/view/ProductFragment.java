@@ -87,6 +87,7 @@ public class ProductFragment extends Fragment {
             public void onChanged(CommonError commonError) {
                 if(commonError.getAction().equalsIgnoreCase(Constant.PRODUCT_API))
                 Toast.makeText(getActivity(), commonError.getThrowable().getMessage(), Toast.LENGTH_LONG).show();
+                hideProgress();
             }
         });
 

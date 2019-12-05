@@ -16,7 +16,7 @@ import com.example.mvvmdemo.utils.Repository;
  */
 public class App extends Application {
 
-    private final String BASE_URL ="https://api.myjson.com/bins/" ;
+    private final String BASE_URL ="https://api.myjson.com/bins/" ; // TODO: 12/5/2019 dummy api data
 
     private AppExecutors appExecutors;
     private ApiService apiService;
@@ -40,7 +40,7 @@ public class App extends Application {
         if (apiService == null) {
             synchronized (ApiService.class) {
                 if (apiService == null) {
-                    apiService = ApiClient.getClient(getApplicationContext(), BASE_URL).create(ApiService.class);
+                    apiService = ApiClient.getClient(getApplicationContext(), BASE_URL,true).create(ApiService.class);
                 }
             }
         }

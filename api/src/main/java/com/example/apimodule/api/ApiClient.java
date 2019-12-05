@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.CertificatePinner;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -17,18 +18,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * createdBy neeraj singh 2/12/2019
- *
  */
 public class ApiClient {
 
     private static Retrofit retrofit = null;
     private static int REQUEST_TIMEOUT = 60;
     private static OkHttpClient okHttpClient;
+    private static boolean mIsSecureConnection;
 
-    public static Retrofit getClient(Context context, String baseUrl) {
+    public static Retrofit getClient(Context context, String baseUrl, boolean isSecureConnection) {
         if (okHttpClient == null)
             initOkHttp(context);
-
+        mIsSecureConnection = isSecureConnection;
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
@@ -42,7 +43,7 @@ public class ApiClient {
 
 
     private static void initOkHttp(final Context context) {
-        OkHttpClient.Builder httpClient = new OkHttpClient().newBuilder()
+        final OkHttpClient.Builder httpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS);
@@ -65,6 +66,15 @@ public class ApiClient {
 //                if (!TextUtils.isEmpty(PrefUtils.getApiKey(context))) {
 //                    requestBuilder.addHeader("Authorization", PrefUtils.getApiKey(context));
 //                }
+
+                if(mIsSecureConnection)
+                {
+                    String hostname = "bdo.com";
+                    CertificatePinner certificatePinner = new CertificatePinner.Builder()
+                            .add(hostname, "sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
+                            .build();
+                    httpClient.certificatePinner(certificatePinner);
+                }
 
                 Request request = requestBuilder.build();
                 return chain.proceed(request);
