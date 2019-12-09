@@ -57,7 +57,7 @@ public class ProductFragment extends Fragment {
     private final CommentClickCallback mCommentClickCallback = new CommentClickCallback() {
         @Override
         public void onClick(CommentEntity comment) {
-           // if(Helper.isOnline(getActivity())) {
+            if(Helper.isOnline(getActivity())) {
                 showProgress();
                 //api call
                 model.getDataFromApi(getViewLifecycleOwner(), Constant.PRODUCT_API).observe(getViewLifecycleOwner(), new Observer<Data>() {
@@ -75,9 +75,9 @@ public class ProductFragment extends Fragment {
                         hideProgress();
                     }
                 });
-           // }else{
-           //     Toast.makeText(getActivity(),"No internet.",Toast.LENGTH_LONG).show();
-           // }
+            }else{
+                Toast.makeText(getActivity(),"No internet.",Toast.LENGTH_LONG).show();
+            }
         }
     };
 

@@ -20,10 +20,7 @@ import java.util.List;
  *
  */
 public class ProductListViewModel extends BaseViewModel {
-
-
     private final MediatorLiveData<List<ProductEntity>> mObservableProducts;
-
     public ProductListViewModel(Application application) {
         super(application);
         mObservableProducts = new MediatorLiveData<>();
