@@ -47,4 +47,7 @@ public class App extends Application {
         return apiService;
     }
 
+    public AppExecutors getAppExecutors() {
+        return appExecutors;
+    }
 }

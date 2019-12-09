@@ -23,7 +23,7 @@ import com.example.mvvmdemo.utils.Repository;
 
 import java.util.List;
 
-public class ProductViewModel extends AndroidViewModel {
+public class ProductViewModel extends BaseViewModel {
 
     private final LiveData<ProductEntity> mObservableProduct;
     private final MutableLiveData<Data> dataLiveData=new MutableLiveData<>();

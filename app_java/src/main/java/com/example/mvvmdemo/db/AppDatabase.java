@@ -74,6 +74,7 @@ public abstract class AppDatabase extends RoomDatabase {
                                 database.setDatabaseCreated();
                             }
                         });
+
                     }
                 })
             .addMigrations(MIGRATION_1_2)
@@ -95,7 +96,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static void insertData(final AppDatabase database, final List<ProductEntity> products,
             final List<CommentEntity> comments) {
-        database.runInTransaction(() -> {
+            database.runInTransaction(() -> {
             database.productDao().insertAll(products);
             database.commentDao().insertAll(comments);
         });

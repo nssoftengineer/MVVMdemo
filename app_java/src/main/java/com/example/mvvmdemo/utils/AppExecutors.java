@@ -17,9 +17,7 @@ import java.util.concurrent.Executors;
 public class AppExecutors {
 
     private final Executor mDiskIO;
-
     private final Executor mNetworkIO;
-
     private final Executor mMainThread;
 
     private AppExecutors(Executor diskIO, Executor networkIO, Executor mainThread) {
@@ -28,6 +26,7 @@ public class AppExecutors {
         this.mMainThread = mainThread;
     }
 
+    //call from app
     public AppExecutors() {
         this(Executors.newSingleThreadExecutor(), Executors.newFixedThreadPool(3),
                 new MainThreadExecutor());

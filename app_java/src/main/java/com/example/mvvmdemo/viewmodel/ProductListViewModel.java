@@ -19,22 +19,17 @@ import java.util.List;
  * createdBy neeraj singh 2/12/2019
  *
  */
-public class ProductListViewModel extends AndroidViewModel {
+public class ProductListViewModel extends BaseViewModel {
 
-    private final Repository mRepository;
 
     private final MediatorLiveData<List<ProductEntity>> mObservableProducts;
 
     public ProductListViewModel(Application application) {
         super(application);
-
         mObservableProducts = new MediatorLiveData<>();
         // set by default null, until we get data from the database.
         mObservableProducts.setValue(null);
-
-        mRepository = ((App) application).getRepository();
-        LiveData<List<ProductEntity>> products = mRepository.getProducts();
-
+        LiveData<List<ProductEntity>> products = getRepository().getProducts();
         // observe the changes of the products from the database and forward them
         mObservableProducts.addSource(products, (List<ProductEntity> value) -> {
             mObservableProducts.setValue(value);
@@ -49,6 +44,6 @@ public class ProductListViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<ProductEntity>> searchProducts(String query) {
-        return mRepository.searchProducts(query);
+        return getRepository().searchProducts(query);
     }
 }

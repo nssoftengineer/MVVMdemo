@@ -87,6 +87,7 @@ public class Repository {
                 .subscribeWith(new DisposableSingleObserver<Data>() {
                     @Override
                     public void onSuccess(Data data) {
+
                         mObservableData.setValue(data);
                     }
                     @Override
