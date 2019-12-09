@@ -12,3 +12,7 @@ Fluent SQLite database access
 
 <b>ViewModel</b>
 Manage UI-related data in a lifecycle-conscious way
+
+
+
+<img src="https://developer.android.com/topic/libraries/architecture/images/final-architecture.png"/>
