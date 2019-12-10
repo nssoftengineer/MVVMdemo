@@ -8,6 +8,7 @@ import com.example.mvvmdemo.db.AppDatabase;
 import com.example.mvvmdemo.utils.AppExecutors;
 import com.example.mvvmdemo.utils.Repository;
 
+import retrofit2.Retrofit;
 
 
 /**
@@ -25,6 +26,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         appExecutors=new AppExecutors();
+        ApiClient.retrofitInit(getApplicationContext(), BASE_URL,true);
     }
 
     public AppDatabase getDatabase(){
@@ -33,19 +35,9 @@ public class App extends Application {
 
     public Repository getRepository()
     {
-        return Repository.getInstance(getDatabase(),getApiService());
+        return Repository.getInstance(getDatabase());
     }
 
-    public ApiService getApiService() {
-        if (apiService == null) {
-            synchronized (ApiService.class) {
-                if (apiService == null) {
-                    apiService = ApiClient.getClient(getApplicationContext(), BASE_URL,true).create(ApiService.class);
-                }
-            }
-        }
-        return apiService;
-    }
 
     public AppExecutors getAppExecutors() {
         return appExecutors;

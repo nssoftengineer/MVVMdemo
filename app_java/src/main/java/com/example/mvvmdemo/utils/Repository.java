@@ -7,7 +7,9 @@ import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import com.example.apimodule.api.ApiClient;
 import com.example.apimodule.api.apiservice.ApiService;
+import com.example.apimodule.api.apiservice.LoginService;
 import com.example.apimodule.api.product.Data;
 import com.example.mvvmdemo.db.AppDatabase;
 import com.example.mvvmdemo.model.CommentEntity;
@@ -30,15 +32,13 @@ public class Repository {
     private static final String TAG = "Repository" ;
     private static Repository instance;
     private final AppDatabase mAppDatabase;
-    private ApiService apiService;
     private MediatorLiveData<List<ProductEntity>> mObservableProducts;
     private MutableLiveData<Data> mObservableData =new MutableLiveData<>();
     private MutableLiveData<CommonError> error =new MutableLiveData<>();
 
 
-    public Repository(AppDatabase appDatabase, ApiService apiService) {
+    public Repository(AppDatabase appDatabase) {
         this.mAppDatabase = appDatabase;
-        this.apiService = apiService;
         mObservableProducts = new MediatorLiveData<>();
         mObservableProducts.addSource(mAppDatabase.productDao().loadAllProducts(), new Observer<List<ProductEntity>>() {
             @Override
@@ -50,11 +50,11 @@ public class Repository {
         });
     }
 
-    public static Repository getInstance(AppDatabase appDatabase, ApiService apiService) {
+    public static Repository getInstance(AppDatabase appDatabase) {
         if (instance == null) {
             synchronized (Repository.class) {
                 if (instance == null) {
-                    instance = new Repository(appDatabase, apiService);
+                    instance = new Repository(appDatabase);
                 }
             }
         }
@@ -82,7 +82,7 @@ public class Repository {
     }
 
     public LiveData<Data> getDataFromApi(String action) {
-        apiService.getProduct().subscribeOn(Schedulers.io())
+        ApiClient.getRetrofit(ApiService.class).getProduct().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<Data>() {
                     @Override

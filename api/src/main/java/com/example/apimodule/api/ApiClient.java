@@ -1,6 +1,7 @@
 package com.example.apimodule.api;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +27,9 @@ public class ApiClient {
     private static OkHttpClient okHttpClient;
     private static boolean mIsSecureConnection;
 
-    public static Retrofit getClient(Context context, String baseUrl, boolean isSecureConnection) {
+
+    // TODO: 12/10/2019 always initialize before call api
+    public static void retrofitInit(Context context, String baseUrl, boolean isSecureConnection) {
         if (okHttpClient == null)
             initOkHttp(context);
         mIsSecureConnection = isSecureConnection;
@@ -38,9 +41,11 @@ public class ApiClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-        return retrofit;
     }
 
+    public static <T> T getRetrofit(Class<T> service) {
+            return retrofit.create(service);
+    }
 
     private static void initOkHttp(final Context context) {
         final OkHttpClient.Builder httpClient = new OkHttpClient().newBuilder()
@@ -67,8 +72,7 @@ public class ApiClient {
 //                    requestBuilder.addHeader("Authorization", PrefUtils.getApiKey(context));
 //                }
 
-                if(mIsSecureConnection)
-                {
+                if (mIsSecureConnection) {
                     String hostname = "bdo.com";
                     CertificatePinner certificatePinner = new CertificatePinner.Builder()
                             .add(hostname, "sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")

@@ -31,11 +31,8 @@ import com.example.utils.Helper;
 import java.util.List;
 
 public class ProductFragment extends Fragment {
-
     private static final String KEY_PRODUCT_ID = "product_id";
-
     private ProductFragmentBinding mBinding;
-
     private CommentAdapter mCommentAdapter;
     private ProductViewModel model;
     private ProgressBar progressBar;
