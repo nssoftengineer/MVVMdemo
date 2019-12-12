@@ -40,4 +40,6 @@ dependencies {
     implementation deps.rx_android_io
     implementation deps.rx_java_io
     implementation "com.jakewharton.rxbinding2:rxbinding:2.0.0"
+
+    implementation deps.mockito.core
 }
