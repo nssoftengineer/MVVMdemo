@@ -26,7 +26,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         appExecutors=new AppExecutors();
-        ApiClient.retrofitInit(getApplicationContext(), BASE_URL,true);
+        ApiClient.retrofitInit(BASE_URL,true);
     }
 
     public AppDatabase getDatabase(){

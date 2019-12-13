@@ -2,6 +2,7 @@ package com.example.apimodule.api.apiservice;
 
 
 import com.example.apimodule.api.product.Data;
+import com.example.apimodule.api.product.SampleData;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
@@ -11,6 +12,6 @@ import retrofit2.http.GET;
  *
  */
 public interface LoginService {
-    @GET("chou4")
-    Single<Data> getLogin();
+    @GET("prod")
+    Single<SampleData> getLogin();
 }

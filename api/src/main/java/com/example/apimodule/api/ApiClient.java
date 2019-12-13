@@ -29,9 +29,9 @@ public class ApiClient {
 
 
     // TODO: 12/10/2019 always initialize before call api
-    public static void retrofitInit(Context context, String baseUrl, boolean isSecureConnection) {
+    public static void retrofitInit(String baseUrl, boolean isSecureConnection) {
         if (okHttpClient == null)
-            initOkHttp(context);
+            initOkHttp();
         mIsSecureConnection = isSecureConnection;
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
@@ -47,7 +47,7 @@ public class ApiClient {
             return retrofit.create(service);
     }
 
-    private static void initOkHttp(final Context context) {
+    private static void initOkHttp() {
         final OkHttpClient.Builder httpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
