@@ -11,6 +11,7 @@ import com.example.apimodule.api.ApiClient;
 import com.example.apimodule.api.apiservice.ApiService;
 import com.example.apimodule.api.apiservice.LoginService;
 import com.example.apimodule.api.product.Data;
+import com.example.apimodule.api.product.SampleData;
 import com.example.mvvmdemo.db.AppDatabase;
 import com.example.mvvmdemo.model.CommentEntity;
 import com.example.mvvmdemo.model.ProductEntity;
@@ -34,6 +35,7 @@ public class Repository {
     private final AppDatabase mAppDatabase;
     private MediatorLiveData<List<ProductEntity>> mObservableProducts;
     private MutableLiveData<Data> mObservableData =new MutableLiveData<>();
+    private MutableLiveData<SampleData> mObservableDataSampleData =new MutableLiveData<>();
     private MutableLiveData<CommonError> error =new MutableLiveData<>();
 
 
@@ -100,6 +102,27 @@ public class Repository {
                     }
                 });
         return mObservableData;
+    }
+
+    public LiveData<SampleData> getDataFromApiSampleData(String action) {
+        ApiClient.getRetrofit(ApiService.class).getProductSampleData("1").subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<SampleData>() {
+                    @Override
+                    public void onSuccess(SampleData data) {
+
+                        mObservableDataSampleData.setValue(data);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError: "+e.getMessage());
+                        CommonError commonError=new CommonError();
+                        commonError.setThrowable(e);
+                        commonError.setAction(action);
+                        error.setValue(commonError);
+                    }
+                });
+        return mObservableDataSampleData;
     }
 
     public MutableLiveData<CommonError> getError() {

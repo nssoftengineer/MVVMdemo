@@ -50,7 +50,7 @@ public class TestProduct {
     public void TestPass() {
         System.out.println("TestPass Method");
         Gson gson = new Gson();
-        SampleData sampleData = gson.fromJson("{'id':'Me','phone':{'Home':'16','Work':'00111111','Cell-1':'1111111','Cell-2':'2222222'},'country':'Japan','status':1}", SampleData.class);
+        SampleData sampleData = gson.fromJson("{'id':'1','phone':{'Home':'16','Work':'00111111','Cell-1':'1111111','Cell-2':'2222222'},'country':'Japan','status':1}", SampleData.class);
         Single<SampleData> sampleDataSingle = Single.just(sampleData);
         when(loginService.getLogin()).thenReturn(sampleDataSingle);
         assertEquals(sampleDataSingle, loginService.getLogin());
@@ -59,13 +59,11 @@ public class TestProduct {
     }
 
     @Test
-    public void TestPass2() {
-        System.out.println("TestPass Method");
+    public void TestPassWithParameter() {
+        System.out.println("TestPassWithParameter Method");
         Gson gson = new Gson();
-        SampleData sampleData = gson.fromJson("{'id':'Me','phone':{'Home':'16','Work':'00111111','Cell-1':'1111111','Cell-2':'2222222'},'country':'Japan','status':1}", SampleData.class);
+        SampleData sampleData = gson.fromJson("{'id':'2','phone':{'Home':'16','Work':'00111111','Cell-1':'1111111','Cell-2':'2222222'},'country':'Japan','status':1}", SampleData.class);
         Single<SampleData> sampleDataSingle = Single.just(sampleData);
-
-
         when(loginService.getLoginById(4)).thenReturn(sampleDataSingle);
         assertEquals(sampleDataSingle, loginService.getLoginById(4));
         verify(loginService).getLoginById(4);

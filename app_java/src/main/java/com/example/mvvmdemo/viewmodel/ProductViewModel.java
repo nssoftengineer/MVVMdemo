@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.apimodule.api.product.Data;
+import com.example.apimodule.api.product.SampleData;
 import com.example.mvvmdemo.app.App;
 import com.example.mvvmdemo.model.CommentEntity;
 import com.example.mvvmdemo.model.ProductEntity;
@@ -27,6 +28,7 @@ public class ProductViewModel extends BaseViewModel {
 
     private final LiveData<ProductEntity> mObservableProduct;
     private final MutableLiveData<Data> dataLiveData=new MutableLiveData<>();
+    private final MutableLiveData<SampleData> dataLiveDataString=new MutableLiveData<>();
     public ObservableField<ProductEntity> product = new ObservableField<>();
     private Repository repository;
     private final int mProductId;
@@ -69,7 +71,15 @@ public class ProductViewModel extends BaseViewModel {
         });
         return dataLiveData;
     }
-
+    public LiveData<SampleData> getDataFromApiSampleData(LifecycleOwner lifecycleOwner,String action) {
+        repository.getDataFromApiSampleData(action).observe(lifecycleOwner, new Observer<SampleData>() {
+            @Override
+            public void onChanged(SampleData data) {
+                dataLiveDataString.setValue(data);
+            }
+        });
+        return dataLiveDataString;
+    }
     public MutableLiveData<CommonError> getError(LifecycleOwner lifecycleOwner)
     {
          MutableLiveData<CommonError> commonErrorMutableLiveData=new MutableLiveData<>();

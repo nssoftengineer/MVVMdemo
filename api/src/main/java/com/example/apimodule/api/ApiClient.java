@@ -1,8 +1,5 @@
 package com.example.apimodule.api;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -44,7 +41,7 @@ public class ApiClient {
     }
 
     public static <T> T getRetrofit(Class<T> service) {
-            return retrofit.create(service);
+        return retrofit.create(service);
     }
 
     private static void initOkHttp() {
@@ -66,12 +63,6 @@ public class ApiClient {
                         .addHeader("Accept", "application/json")
                         .addHeader("Content-Type", "application/json");
 
-                // Adding Authorization token (API Key)
-                // Requests will be denied without API key
-//                if (!TextUtils.isEmpty(PrefUtils.getApiKey(context))) {
-//                    requestBuilder.addHeader("Authorization", PrefUtils.getApiKey(context));
-//                }
-
                 if (mIsSecureConnection) {
                     String hostname = "bdo.com";
                     CertificatePinner certificatePinner = new CertificatePinner.Builder()
@@ -84,6 +75,9 @@ public class ApiClient {
                 return chain.proceed(request);
             }
         });
+
+        httpClient.interceptors().add(new FakeInterceptor());// TODO: 12/16/2019 fake Interceptor
+
 
         okHttpClient = httpClient.build();
     }

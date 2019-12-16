@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.apimodule.api.product.Content;
 import com.example.apimodule.api.product.Data;
 import com.example.apimodule.api.product.Product;
+import com.example.apimodule.api.product.SampleData;
 import com.example.mvvmdemo.R;
 import com.example.mvvmdemo.databinding.ProductFragmentBinding;
 import com.example.mvvmdemo.model.CommentEntity;
@@ -74,6 +75,15 @@ public class ProductFragment extends Fragment {
                 });
             }else{
                 Toast.makeText(getActivity(),"No internet.",Toast.LENGTH_LONG).show();
+
+                //api call
+                model.getDataFromApiSampleData(getViewLifecycleOwner(), Constant.PRODUCT_API).observe(getViewLifecycleOwner(), new Observer<SampleData>() {
+                    @Override
+                    public void onChanged(SampleData data) {
+                        Toast.makeText(getActivity(), data.getCountry(), Toast.LENGTH_LONG).show();
+                        hideProgress();
+                    }
+                });
             }
         }
     };

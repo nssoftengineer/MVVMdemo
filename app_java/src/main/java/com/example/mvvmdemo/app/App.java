@@ -2,6 +2,8 @@ package com.example.mvvmdemo.app;
 
 import android.app.Application;
 
+import androidx.multidex.MultiDexApplication;
+
 import com.example.apimodule.api.ApiClient;
 import com.example.apimodule.api.apiservice.ApiService;
 import com.example.mvvmdemo.db.AppDatabase;
@@ -15,7 +17,7 @@ import retrofit2.Retrofit;
  * createdBy neeraj singh 2/12/2019
  *
  */
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     private final String BASE_URL ="https://api.myjson.com/bins/" ; // TODO: 12/5/2019 dummy api data
 
