@@ -5,6 +5,7 @@ import com.example.apimodule.api.apiservice.ApiService;
 import com.example.apimodule.api.apiservice.LoginService;
 import com.example.apimodule.api.product.Data;
 import com.example.apimodule.api.product.SampleData;
+import com.google.gson.Gson;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,9 +13,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.mockito.stubbing.OngoingStubbing;
 
+import io.reactivex.Observer;
 import io.reactivex.Single;
+import io.reactivex.disposables.Disposable;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -44,13 +49,26 @@ public class TestProduct {
     @Test
     public void TestPass() {
         System.out.println("TestPass Method");
-        String s = "{'id':'Me','phone':{'Home':'16','Work':'00111111','Cell-1':'1111111','Cell-2':'2222222'},'country':'Japan','status':1}";
-
-        SampleData sampleData=new SampleData();
-        sampleData.setCountry("India");
-        when(loginService.getLogin()).thenReturn(sampleData);
-        assertEquals(sampleData, loginService.getLogin());
+        Gson gson = new Gson();
+        SampleData sampleData = gson.fromJson("{'id':'Me','phone':{'Home':'16','Work':'00111111','Cell-1':'1111111','Cell-2':'2222222'},'country':'Japan','status':1}", SampleData.class);
+        Single<SampleData> sampleDataSingle = Single.just(sampleData);
+        when(loginService.getLogin()).thenReturn(sampleDataSingle);
+        assertEquals(sampleDataSingle, loginService.getLogin());
         verify(loginService).getLogin();
+
+    }
+
+    @Test
+    public void TestPass2() {
+        System.out.println("TestPass Method");
+        Gson gson = new Gson();
+        SampleData sampleData = gson.fromJson("{'id':'Me','phone':{'Home':'16','Work':'00111111','Cell-1':'1111111','Cell-2':'2222222'},'country':'Japan','status':1}", SampleData.class);
+        Single<SampleData> sampleDataSingle = Single.just(sampleData);
+
+
+        when(loginService.getLoginById(4)).thenReturn(sampleDataSingle);
+        assertEquals(sampleDataSingle, loginService.getLoginById(4));
+        verify(loginService).getLoginById(4);
     }
 
 

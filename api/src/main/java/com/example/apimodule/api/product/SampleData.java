@@ -2,10 +2,17 @@ package com.example.apimodule.api.product;
 
 public class SampleData {
 
-    private String id;
+        private String id;
     private Phone phone;
     private String country;
     private Integer status;
+
+    public SampleData(String id, Phone phone, String country, Integer status) {
+        this.id = id;
+        this.phone = phone;
+        this.country = country;
+        this.status = status;
+    }
 
     public String getId() {
         return id;
