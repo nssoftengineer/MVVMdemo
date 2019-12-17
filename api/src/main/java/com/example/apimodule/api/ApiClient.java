@@ -76,7 +76,7 @@ public class ApiClient {
             }
         });
 
-     //   httpClient.interceptors().add(new FakeInterceptor());// TODO: 12/16/2019 fake Interceptor
+       // httpClient.interceptors().add(new FakeInterceptor());// TODO: 12/16/2019 fake Interceptor
 
 
         okHttpClient = httpClient.build();
